@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentPageSpan = document.getElementById('current-page-span');
 
   let currentPage = 1;
-  const imagesPerPage = 9; // Show 9 images in a 3x3 grid
+  const imagesPerPage = 16; // Show 16 images in a 4x4 grid
 
   async function fetchAndDisplayImages(page) {
     if (!dogGridContainer) {
@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.images && data.images.length > 0) {
         data.images.forEach(imageUrl => {
           const colDiv = document.createElement('div');
-          colDiv.className = 'col-md-4 col-sm-6 mb-3'; // Bootstrap grid column
+          colDiv.className = 'col-md-3 col-sm-4 mb-3'; // Bootstrap grid column
 
           const img = document.createElement('img');
           img.src = imageUrl;
           img.alt = 'Random Dog';
           img.className = 'img-fluid rounded shadow-sm'; // Bootstrap class for responsive images
-          img.style.height = '300px'; // Fixed height for uniformity
+          img.style.height = '200px'; // Fixed height for uniformity
           img.style.objectFit = 'cover'; // Ensure image covers the area without distortion
 
           colDiv.appendChild(img);
