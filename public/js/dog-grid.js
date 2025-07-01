@@ -62,10 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (error) {
       console.error('Error fetching dog images:', error);
-      dogGridContainer.classList.remove('skeleton-loader'); // Ensure skeleton is removed on error too
+       dogGridContainer.classList.remove('skeleton-loader'); // Ensure skeleton is removed on error too
       dogGridContainer.innerHTML = `<p class="text-center text-danger">Could not load images. ${error.message}</p>`;
-    } finally {
-      if (loadingAnimation) loadingAnimation.style.display = 'none'; // Hide loading animation
+     } finally {
+       if (loadingAnimation) loadingAnimation.style.display = 'none'; // Hide loading animation
     }
 
     updatePaginationControls();
