@@ -25,3 +25,28 @@ This document lists the main accessible routes in this Express.js application.
           "status": "success"
         }
         ```
+
+-   **Path**: `/dog/random-batch`
+    -   **Description**: Fetches a batch of random dog image URLs from the Dog CEO API.
+    -   **Method**: `GET`
+    -   **Query Parameters**:
+        -   `count` (optional, number): Specifies the number of images to fetch. Defaults to 9.
+    -   **Example URL (assuming server on localhost:3000, fetching 6 images)**: `http://localhost:3000/dog/random-batch?count=6`
+    -   **Example Success Response**:
+        ```json
+        {
+          "images": [
+            "https://images.dog.ceo/breeds/hound-afghan/n02092002_10949.jpg",
+            "https://images.dog.ceo/breeds/cotondetulear/100_2013.jpg",
+            // ... more image URLs
+          ],
+          "status": "success"
+        }
+        ```
+
+## Frontend Page Routes
+
+-   **Path**: `/dogs/gallery`
+    -   **Description**: Displays a paginated gallery of random dog images.
+    -   **Method**: `GET`
+    -   **Interaction**: Fetches images dynamically using client-side JavaScript from the `/dog/random-batch` endpoint.

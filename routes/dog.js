@@ -18,4 +18,28 @@ router.get('/random', async (req, res, next) => {
   }
 });
 
+// GET batch of random dog images
+router.get('/random-batch', async (req, res, next) => {
+  const count = parseInt(req.query.count, 10) || 9; // Default to 9 images if count is not provided or invalid
+  const promises = [];
+
+  for (let i = 0; i < count; i++) {
+    promises.push(axios.get('https://dog.ceo/api/breeds/image/random'));
+  }
+
+  try {
+    const responses = await Promise.all(promises);
+    const images = responses.map(response => response.data.message);
+    res.json({
+      images: images,
+      status: 'success'
+    });
+  } catch (error) {
+    console.error('Error fetching batch of dog images:', error);
+    // If any of the promises reject, Promise.all will reject.
+    // We pass this error to the Express error handler.
+    next(error);
+  }
+});
+
 module.exports = router;

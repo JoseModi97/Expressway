@@ -1,0 +1,30 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <div class="container mt-5">
+    <h1 class="mb-4 text-center">Dog Image Gallery</h1>
+
+    <div id="dog-grid-container" class="row g-3">
+      <!-- Images will be loaded here by JavaScript -->
+    </div>
+
+    <nav aria-label="Page navigation" class="mt-5">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" id="prev-page-item">
+          <a class="page-link" href="#" id="prev-page-link">Previous</a>
+        </li>
+        <li class="page-item disabled">
+          <span class="page-link" id="current-page-span">Page 1</span>
+        </li>
+        <li class="page-item" id="next-page-item">
+          <a class="page-link" href="#" id="next-page-link">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Include Bootstrap 5 JS (bundle includes Popper) if not already globally available -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+
+  <script src="/js/dog-grid.js"></script>
+{% endblock %}
