@@ -2,13 +2,16 @@
 
 {% block body %}
   <div class="container mt-5">
+    <div id="loading-animation" class="loading-animation-container" style="display: none;">
+      <div class="spinner"></div>
+    </div>
     <h1 class="mb-4 text-center">Dog Image Gallery</h1>
 
     <div id="dog-grid-container" class="row g-3">
       <!-- Images will be loaded here by JavaScript -->
     </div>
 
-    <nav aria-label="Page navigation" class="mt-5">
+    <nav aria-label="Page navigation" class="mt-5 fixed-pagination">
       <ul class="pagination justify-content-center">
         <li class="page-item" id="prev-page-item">
           <a class="page-link" href="#" id="prev-page-link">Previous</a>
