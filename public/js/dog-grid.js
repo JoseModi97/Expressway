@@ -49,6 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
           const colDiv = document.createElement('div');
           colDiv.className = 'col-md-3 col-sm-4 mb-3';
 
+          const anchor = document.createElement('a');
+          anchor.href = imageUrl;
+          anchor.dataset.fslightbox = 'gallery'; // 'gallery' can be any name, groups images
+
           const img = document.createElement('img');
           img.src = imageUrl;
           img.alt = 'Random Dog';
@@ -56,10 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
           img.style.height = '200px';
           img.style.objectFit = 'cover';
 
-          colDiv.appendChild(img);
+          anchor.appendChild(img);
+          colDiv.appendChild(anchor);
           dogGridContainer.appendChild(colDiv);
         });
         currentPage++; // Increment for the next fetch
+        if (typeof refreshFsLightbox === 'function') {
+          refreshFsLightbox();
+        }
       } else {
         // If no images are returned, and it's not an initial load,
         // it might mean no more images to load (or an issue).
@@ -106,80 +114,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial load
   fetchAndDisplayImages(true);
-
-  // Lightbox elements
-  const lightboxModal = document.getElementById('lightbox-modal');
-  const lightboxImage = document.getElementById('lightbox-image');
-  const lightboxCaption = document.getElementById('lightbox-caption');
-  const lightboxClose = document.querySelector('.lightbox-close');
-  const lightboxPrev = document.querySelector('.lightbox-prev');
-  const lightboxNext = document.querySelector('.lightbox-next');
-
-  let currentImageIndex = -1;
-  let loadedImageUrls = [];
-
-  function openLightbox(index) {
-    if (index >= 0 && index < loadedImageUrls.length) {
-      currentImageIndex = index;
-      lightboxImage.src = loadedImageUrls[currentImageIndex];
-      lightboxCaption.textContent = `Image ${currentImageIndex + 1} of ${loadedImageUrls.length}`;
-      lightboxModal.style.display = 'block';
-      document.body.style.overflow = 'hidden'; // Prevent scrolling of background
-      updateLightboxNav();
-    }
-  }
-
-  function closeLightbox() {
-    lightboxModal.style.display = 'none';
-    document.body.style.overflow = 'auto'; // Restore scrolling
-    currentImageIndex = -1; // Reset index
-  }
-
-  function showPrevImage() {
-    if (currentImageIndex > 0) {
-      openLightbox(currentImageIndex - 1);
-    }
-  }
-
-  function showNextImage() {
-    if (currentImageIndex < loadedImageUrls.length - 1) {
-      openLightbox(currentImageIndex + 1);
-    }
-  }
-
-  function updateLightboxNav() {
-    lightboxPrev.style.display = (currentImageIndex > 0) ? 'block' : 'none';
-    lightboxNext.style.display = (currentImageIndex < loadedImageUrls.length - 1) ? 'block' : 'none';
-  }
-
-  // Event listener for clicking on images in the grid
-  dogGridContainer.addEventListener('click', (event) => {
-    if (event.target.tagName === 'IMG') {
-      // Update loadedImageUrls with all current images in the grid
-      loadedImageUrls = Array.from(dogGridContainer.querySelectorAll('img')).map(img => img.src);
-      const clickedImageSrc = event.target.src;
-      const imageIndex = loadedImageUrls.indexOf(clickedImageSrc);
-      if (imageIndex !== -1) {
-        openLightbox(imageIndex);
-      }
-    }
-  });
-
-  // Event listeners for lightbox controls
-  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-  if (lightboxPrev) lightboxPrev.addEventListener('click', showPrevImage);
-  if (lightboxNext) lightboxNext.addEventListener('click', showNextImage);
-
-  // Keyboard navigation for lightbox
-  document.addEventListener('keydown', (event) => {
-    if (lightboxModal.style.display === 'block') {
-      if (event.key === 'Escape') {
-        closeLightbox();
-      } else if (event.key === 'ArrowLeft') {
-        showPrevImage();
-      } else if (event.key === 'ArrowRight') {
-        showNextImage();
-      }
-    }
-  });
 });
